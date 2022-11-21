@@ -38,8 +38,26 @@ class Lista_1k_k:
                 temp = temp.nast
             return temp
 
-    #def odwroc(self) -> 'Lista_1k_k':
-        #nowa = Lista_1k_k()
+    def odwroc(self) -> 'Lista_1k_k':
+        nowa = self
+        curr = nowa.element
+        nast = curr
+        prev = None
+
+        nast = nast.nast
+        curr.nast = prev
+        prev = curr
+        curr = nast
+
+        while curr != nowa.element:
+            nast = nast.nast
+            curr.nast = prev
+            prev = curr
+            curr = nast
+
+        curr.nast = prev
+        nowa.element = prev.nast
+        return nowa
 
     def zlicz_mniejsze(self, prog: float) -> int:
         temp = self.element
@@ -52,12 +70,12 @@ class Lista_1k_k:
                 i += 1
         return i
 
-    '''def obrob_wartosci(self, funkcja: Callable[[float], None]) -> None:
+    def obrob_wartosci(self, funkcja: Callable[[float], None]) -> None:
         temp = self.element
         funkcja(temp.wart)
         while temp.nast != self.element:
             temp = temp.nast
-            funkcja(temp.wart)'''
+            funkcja(temp.wart)
 
     def przekrec(self) -> None:
         temp1 = self.element
@@ -68,11 +86,11 @@ class Lista_1k_k:
         if self.element is None:
             return True
         temp = self.element
-        if self.element.wart <= temp.nast.wart:
+        if temp.wart >= temp.nast.wart:
             return False
-        while temp.nast != self.element:
+        while temp != self.element:
             temp = temp.nast
-            if temp.wart <= temp.nast.wart:
+            if temp.wart >= temp.nast.wart:
                 return False
         return True
 
@@ -84,19 +102,29 @@ class Lista_1k_k:
             temp = temp.nast
             print(temp.wart, end='->')
 
-def razy_2(cos):
-    print(2 * cos)
+
+def test(cos: float) -> None:
+    cos *= 2
+
 
 def main():
     elem = ListaWpis(1)
     lista = Lista_1k_k(elem)
     lista.element.dodaj_po_nim(2)
-    lista.element.nast.dodaj_po_nim(1)
-    print(lista.zlicz_mniejsze(4))
+    lista.element.nast.dodaj_po_nim(3)
+    lista.element.nast.nast.dodaj_po_nim(4)
+    lista.element.nast.nast.nast.dodaj_po_nim(5)
+    print(lista.zlicz_mniejsze(3))
     lista.print()
+    print(lista.czy_posortowane())
     lista.przekrec()
     lista.print()
     print(lista.czy_posortowane())
+    lista.odwroc()
+    lista.print()
+    print(lista.czy_posortowane())
+    print('')
+    lista.obrob_wartosci(test)
 
 
 if __name__ == '__main__':
