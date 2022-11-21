@@ -30,13 +30,10 @@ class Lista_1k_k:
     def pobierz_el(self, idx: int) -> 'ListaWpis':
         i = 0
         temp = self.element
-        if idx == 0:
-            return temp
-        else:
-            while i < idx-1:
-                i += 1
-                temp = temp.nast
-            return temp
+        while i < idx-1:
+            i += 1
+            temp = temp.nast
+        return temp
 
     def odwroc(self) -> 'Lista_1k_k':
         nowa = self
@@ -56,7 +53,7 @@ class Lista_1k_k:
             curr = nast
 
         curr.nast = prev
-        nowa.element = prev.nast
+        nowa.element = prev
         return nowa
 
     def zlicz_mniejsze(self, prog: float) -> int:
@@ -88,11 +85,11 @@ class Lista_1k_k:
         temp = self.element
         if temp.wart >= temp.nast.wart:
             return False
-        while temp != self.element:
-            temp = temp.nast
+        while temp.nast != self.element:
             if temp.wart >= temp.nast.wart:
                 return False
-        return True
+            temp = temp.nast
+            return True
 
     def print(self) -> None:
         temp = self.element
@@ -114,17 +111,26 @@ def main():
     lista.element.nast.dodaj_po_nim(3)
     lista.element.nast.nast.dodaj_po_nim(4)
     lista.element.nast.nast.nast.dodaj_po_nim(5)
-    print(lista.zlicz_mniejsze(3))
+    print(lista.czy_posortowane())
+    elem1 = lista.pobierz_el(0)
+    print(elem1.wart)
+    elem1 = lista.pobierz_el(1)
+    print(elem1.wart)
+    elem1 = lista.pobierz_el(6)
+    print(elem1.wart)
+    elem1 = lista.pobierz_el(2)
+    print(elem1.wart)
     lista.print()
+    lista1 = lista.odwroc()
+    lista1.print()
+    print('')
+    print(lista.zlicz_mniejsze(3))
+    lista.obrob_wartosci(test)
     print(lista.czy_posortowane())
     lista.przekrec()
     lista.print()
-    print(lista.czy_posortowane())
-    lista.odwroc()
-    lista.print()
-    print(lista.czy_posortowane())
     print('')
-    lista.obrob_wartosci(test)
+    print(lista.czy_posortowane())
 
 
 if __name__ == '__main__':
