@@ -4,10 +4,12 @@ from typing import Callable
 class ListaWpis:
     wart: float
     nast: 'ListaWpis'
+    lista: 'Lista_1k_k'
 
-    def __init__(self, wart, nast=None):
+    def __init__(self, wart, nast: 'ListaWpis' = None, lista: 'Lista_1k_k' = None):
         self.wart = wart
         self.nast = nast
+        self.lista = Lista_1k_k(self)
 
     def dodaj_po_nim(self, wart: float) -> None:
         temp = ListaWpis(wart)
@@ -30,31 +32,10 @@ class Lista_1k_k:
     def pobierz_el(self, idx: int) -> 'ListaWpis':
         i = 0
         temp = self.element
-        while i < idx-1:
+        while i < idx:
             i += 1
             temp = temp.nast
         return temp
-
-    def odwroc(self) -> 'Lista_1k_k':
-        nowa = self
-        curr = nowa.element
-        nast = curr
-        prev = None
-
-        nast = nast.nast
-        curr.nast = prev
-        prev = curr
-        curr = nast
-
-        while curr != nowa.element:
-            nast = nast.nast
-            curr.nast = prev
-            prev = curr
-            curr = nast
-
-        curr.nast = prev
-        nowa.element = prev
-        return nowa
 
     def zlicz_mniejsze(self, prog: float) -> int:
         temp = self.element
@@ -71,8 +52,8 @@ class Lista_1k_k:
         temp = self.element
         funkcja(temp.wart)
         while temp.nast != self.element:
-            temp = temp.nast
             funkcja(temp.wart)
+            temp = temp.nast
 
     def przekrec(self) -> None:
         temp1 = self.element
@@ -105,32 +86,7 @@ def test(cos: float) -> None:
 
 
 def main():
-    elem = ListaWpis(1)
-    lista = Lista_1k_k(elem)
-    lista.element.dodaj_po_nim(2)
-    lista.element.nast.dodaj_po_nim(3)
-    lista.element.nast.nast.dodaj_po_nim(4)
-    lista.element.nast.nast.nast.dodaj_po_nim(5)
-    print(lista.czy_posortowane())
-    elem1 = lista.pobierz_el(0)
-    print(elem1.wart)
-    elem1 = lista.pobierz_el(1)
-    print(elem1.wart)
-    elem1 = lista.pobierz_el(6)
-    print(elem1.wart)
-    elem1 = lista.pobierz_el(2)
-    print(elem1.wart)
-    lista.print()
-    lista1 = lista.odwroc()
-    lista1.print()
-    print('')
-    print(lista.zlicz_mniejsze(3))
-    lista.obrob_wartosci(test)
-    print(lista.czy_posortowane())
-    lista.przekrec()
-    lista.print()
-    print('')
-    print(lista.czy_posortowane())
+
 
 
 if __name__ == '__main__':
